@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebApplication1.Data;   // namespace chứa AppDbContext
+using WebApplication1.Data;          // namespace chứa AppDbContext
+using WebApplication1.Repositories;  // ← thêm dòng này
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,14 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
-// ====================================
+// =====================================
+
+// ===== Đăng ký Repository =====
+builder.Services.AddScoped<IBookRepository, SQLBookRepository>();
+// ==============================
+builder.Services.AddScoped<IAuthorRepository, SQLAuthorRepository>();
+
+builder.Services.AddScoped<IPublisherRepository, SQLPublisherRepository>();
 
 var app = builder.Build();
 

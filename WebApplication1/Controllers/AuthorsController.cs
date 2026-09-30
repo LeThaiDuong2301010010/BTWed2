@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebApplication1.CustomActionFilters;      
 using WebApplication1.Models.DTO;
 using WebApplication1.Repositories;
 
@@ -36,6 +37,7 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost("add-author")]
+        [ValidateModel]     
         public IActionResult AddAuthor([FromBody] AddAuthorRequestDTO addAuthorRequestDTO)
         {
             var authorAdd = _authorRepository.AddAuthor(addAuthorRequestDTO);
@@ -43,6 +45,7 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPut("update-author-by-id/{id}")]
+        [ValidateModel]
         public IActionResult UpdateAuthorById(int id, [FromBody] AuthorNoIdDTO authorDTO)
         {
             var authorUpdate = _authorRepository.UpdateAuthorById(id, authorDTO);
@@ -67,6 +70,7 @@ namespace WebApplication1.Controllers
 
             return Ok(authorDelete);
         }
+
         [HttpGet("{id}/books")]
         public IActionResult GetBooksByAuthorId(int id)
         {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebApplication1.CustomActionFilters; 
 using WebApplication1.Models.DTO;
 using WebApplication1.Repositories;
 
@@ -36,6 +37,7 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost("add-book")]
+        [ValidateModel]  
         public IActionResult AddBook([FromBody] AddBookRequestDTO addBookRequestDTO)
         {
             var bookAdd = _bookRepository.AddBook(addBookRequestDTO);
@@ -43,6 +45,7 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPut("update-book-by-id/{id}")]
+        [ValidateModel]
         public IActionResult UpdateBookById(int id, [FromBody] AddBookRequestDTO bookDTO)
         {
             var updateBook = _bookRepository.UpdateBookById(id, bookDTO);
